@@ -1,0 +1,100 @@
+<div class="categories container-fluid">
+  <div class="container d-flex">
+    <div class="item">
+      <a (click)="filter('')">
+        <img src="assets/all-products.jpg" alt="" />
+        <h6>All Products</h6>
+      </a>
+    </div>
+    <div class="item">
+      <a (click)="filter('electronics')">
+        <img src="assets/electronics.jpg" alt="" />
+        <h6>Electronics</h6>
+      </a>
+    </div>
+    <div class="item">
+      <a (click)="filter('fashion')">
+        <img src="assets/fashion.jpg" alt="" />
+        <h6>Fashion</h6>
+      </a>
+    </div>
+    <div class="item">
+      <a (click)="filter('jewelery')">
+        <img src="assets/jewellery.jpg" alt="" />
+        <h6>Jewellery</h6>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h3 style="text-align: center; margin: 50px 0" class="text-danger">
+    {{ errorMsg }}
+  </h3>
+  <div class="row">
+    <ng-container
+      *ngFor="let item of filterCategory | filter : searchKey : 'title'"
+    >
+      <div class="card col-md-3">
+        <img src="{{ item.image }}" alt="" />
+        <h5
+          style="
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100ch;
+          "
+        >
+          {{ item.title }}
+        </h5>
+        <p
+          style="
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150ch;
+          "
+        >
+          {{ item.description }}
+        </p>
+        <p><strong>Price:</strong> ${{ item.price }}</p>
+        <p
+          style="
+            background-color: black;
+            color: wheat;
+            width: 65px;
+            border-radius: 5px;
+            padding: 5px;
+          "
+        >
+          <i class="fa-solid fa-star" style="color: gold"></i>
+          {{ item.rating.rate }}
+        </p>
+        <p>
+          <button
+            class="btn btn-secondary"
+            (click)="decrQuantity(item)"
+            *ngIf="isItemInCart(item)"
+          >
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <span *ngIf="isItemInCart(item)">{{ getQuantityInCart(item) }}</span>
+          <button
+            class="btn btn-secondary"
+            (click)="incrQuantity(item)"
+            *ngIf="isItemInCart(item)"
+          >
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </p>
+        <button
+          class="btn btn-primary"
+          (click)="addToCart(item)"
+          *ngIf="!isItemInCart(item)"
+        >
+          Add to cart
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
